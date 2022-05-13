@@ -25,3 +25,16 @@ int	init_data(t_data *data, char **av)
 	}
 	return (0);
 }
+
+int	init_av(t_data *data, char **av)
+{
+	data->nb_ph = ft_atoi(av[1]);
+	data->t_die = ft_atoi(av[2]);
+	data->t_eat = ft_atoi(av[3]);
+	data->t_sleep = ft_atoi(av[4]);
+	if (av[5])
+		data->meals = ft_atoi(av[5]);
+	else
+		data->meals = -1;
+	return(0);
+}

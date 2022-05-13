@@ -34,16 +34,16 @@ int	check_args(int ac, char **av, t_data *data)
 		philo_usage();
 		return (1);
 	}
-	if ((data->nb_ph = ft_atoi(av[1])) < 2
-		|| (data->nb_ph = ft_atoi(av[1])) > 200)
+	init_av(data, av);
+	if ((data->nb_ph) < 2 || (data->nb_ph) > 200)
 		ft_putstr_fd("wrong number of philo\n", 2);
-	else if ((data->t_die = ft_atoi(av[2])) < 60)
+	else if ((data->t_die) < 60)
 		ft_putstr_fd("no time to die\n", 2);
-	else if ((data->t_eat = ft_atoi(av[3])) < 60)
+	else if ((data->t_eat) < 60)
 		ft_putstr_fd("not enough time for eating\n", 2);
-	else if ((data->t_sleep = ft_atoi(av[4])) < 60)
+	else if ((data->t_sleep) < 60)
 		ft_putstr_fd("not enough time for morfeus\n", 2);
-	else if (ac == 6 && (data->meals = ft_atoi(av[6])) < 0)
+	else if (ac == 6 && (data->meals) < 0)
 		ft_putstr_fd("nothing to eat\n", 2);
 	else
 		return (init_data(data, av));

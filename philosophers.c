@@ -17,7 +17,6 @@ int	main(int ac, char **av)
 	t_data	data;
 	int		i;
 	//int		size;
-
 	i = 0;
 	if ((i = check_args(ac, av, &data)))
 		ft_putstr_fd("check your arguments\n", 2);

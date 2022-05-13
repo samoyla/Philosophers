@@ -36,13 +36,9 @@ typedef struct s_data
 	t_philo	*philo;
 }t_data;
 
-typedef struct s_fork
-{
-
-}t_fork;
-
 //functions:
 void	ft_error(void);
+int		init_av(t_data *data, char **av);
 int		init_data(t_data *data, char **av);
 void	philo_usage(void);
 //int		check_args(char **av);
