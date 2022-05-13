@@ -18,21 +18,23 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-typedef struct s_data
-{
-	int	nb_ph;
-	int	t_die;
-	int	t_eat;
-	int	t_sleep;
-	int	meals;
-}t_data;
-
 typedef struct s_philo
 {
-	t_data			data;
-	pthread_mutex_t	forks;
-	pthread_t		philo;
+	int				id;
+	struct s_data	*data;
+	//pthread_mutex_t	fork;
+	//pthread_t		philo_th;
 }t_philo;
+
+typedef struct s_data
+{
+	int		nb_ph;
+	int		t_die;
+	int		t_eat;
+	int		t_sleep;
+	int		meals;
+	t_philo	*philo;
+}t_data;
 
 typedef struct s_fork
 {
@@ -41,13 +43,16 @@ typedef struct s_fork
 
 //functions:
 void	ft_error(void);
-void	init_data(t_data *data, char **av);
+int		init_data(t_data *data, char **av);
 void	philo_usage(void);
-int		check_args(t_data *data, char **av);
-void	*routine(t_philo *philo);
+//int		check_args(char **av);
+int		check_args(int ac, char **av, t_data *data);
+int		check_conditions(int ac, t_data *data);
+void	*start_routine(void *args);
 //utils
 int		ft_atoi(const char *nptr);
 void	ft_putstr_fd(char *s, int fd);
 size_t	ft_strlen(const char *s);
+int		ft_isdigit(int c);
 
 #endif

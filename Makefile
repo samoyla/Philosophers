@@ -12,7 +12,7 @@
 
 NAME = philo
 
-SRCS	= philosophers.c errors.c init.c utils.c
+SRCS	= philosophers.c errors.c init.c utils.c #routine.c
 
 OBJS = ${SRCS:.c=.o}
 
