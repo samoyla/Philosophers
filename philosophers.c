@@ -26,7 +26,6 @@ int	main(int ac, char **av)
 	printf("time to die %d\n", data.t_die);
 	printf("time to eat %d\n", data.t_eat);
 	printf("time to sleep %d\n", data.t_sleep);
-//	if (check_conditions(ac, &data))
-	//	ft_putstr_fd("oops,smth went wrong", 2);
+	printf("philo's id is: %d\n", data.philo->id);
 	return (0);
 }

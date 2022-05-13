@@ -47,7 +47,6 @@ int		init_data(t_data *data, char **av);
 void	philo_usage(void);
 //int		check_args(char **av);
 int		check_args(int ac, char **av, t_data *data);
-int		check_conditions(int ac, t_data *data);
 void	*start_routine(void *args);
 //utils
 int		ft_atoi(const char *nptr);
