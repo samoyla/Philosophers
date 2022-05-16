@@ -30,20 +30,21 @@ typedef struct s_philo
 
 typedef struct s_data
 {
-	int		nb_ph;
-	int		t_death;
-	int		t_eat;
-	int		t_sleep;
-	int		meals;
-	t_philo	*philo;
+	int				nb_ph;
+	int				t_death;
+	int				t_eat;
+	int				t_sleep;
+	int				meals;
+	pthread_mutex_t	forks[250];
+	t_philo			*philo;
 }t_data;
 
 //functions:
 void	ft_error(void);
 int		init_av(t_data *data, int ac, char **av);
+int		init_mutex(t_data *data);
 int		init_philo(t_data *data);
 void	philo_usage(void);
-//int		check_args(char **av);
 int		check_args(int ac, char **av, t_data *data);
 void	*start_routine(void *args);
 //utils

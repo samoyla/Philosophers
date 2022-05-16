@@ -12,12 +12,25 @@
 
 #include "philosophers.h"
 
-int	init_philo(t_data *data)
+int	init_mutex(t_data *data)
 {
 	int	i;
 
 	i = data->nb_ph;
 	while (--i >= 0)
+	{
+		if (pthread_mutex_init(&(data->forks[i]), NULL))
+			return (1);
+	}
+	return (0);
+}
+
+int	init_philo(t_data *data)
+{
+	int	i;
+
+	i = data->nb_ph;
+	while (++i < data->nb_ph)
 	{
 		data->philo[i].id = i;
 		data->philo[i].l_fork = i;
@@ -47,7 +60,8 @@ int	init_av(t_data *data, int ac, char **av)
 	else if (ac == 6 && (data->meals) < 0)
 		ft_putstr_fd("wrong number of meals\n", 2);
 	return (1);
-	//init_mutex;
+	if (init_mutex(data))
+		return (1);
 	init_philo(data);
 	return (0);
 }

@@ -12,20 +12,10 @@
 
 #include "philosophers.h"
 
-/*void	*eat(t_philo philo)
-{	
-	printf("");
-}
-
-void	*sleep(t_philo philo)
+int	create_thread(t_data *data)
 {
 
 }
-
-void	*think(t_philo philo)
-{
-
-}*/
 
 
 void	*start_routine(void *args)
