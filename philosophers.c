@@ -15,16 +15,15 @@
 int	main(int ac, char **av)
 {
 	t_data	data;
-	int		i;
-	//int		size;
-	i = 0;
-	if ((i = check_args(ac, av, &data)))
+
+	if ((check_args(ac, av, &data)) == 1)
 		ft_putstr_fd("check your arguments\n", 2);
-	init_data(&data, av);
 	printf("there are %d philo\n", data.nb_ph);
-	printf("time to die %d\n", data.t_die);
+	printf("time to die %d\n", data.t_death);
 	printf("time to eat %d\n", data.t_eat);
 	printf("time to sleep %d\n", data.t_sleep);
-	printf("philo's id is: %d\n", data.philo->id);
+	printf("each philo ate %d times\n", data.meals);
+	printf("right fork id: %d\n", data.philo->r_fork);
+	printf("left fork id: %d\n", data.philo->l_fork);
 	return (0);
 }

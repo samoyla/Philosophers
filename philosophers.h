@@ -17,19 +17,21 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <limits.h>
 
 typedef struct s_philo
 {
 	int				id;
 	struct s_data	*data;
-	//pthread_mutex_t	fork;
-	//pthread_t		philo_th;
+	int				l_fork;
+	int				r_fork;
+	pthread_t		philo_th;
 }t_philo;
 
 typedef struct s_data
 {
 	int		nb_ph;
-	int		t_die;
+	int		t_death;
 	int		t_eat;
 	int		t_sleep;
 	int		meals;
@@ -38,8 +40,8 @@ typedef struct s_data
 
 //functions:
 void	ft_error(void);
-int		init_av(t_data *data, char **av);
-int		init_data(t_data *data, char **av);
+int		init_av(t_data *data, int ac, char **av);
+int		init_philo(t_data *data);
 void	philo_usage(void);
 //int		check_args(char **av);
 int		check_args(int ac, char **av, t_data *data);

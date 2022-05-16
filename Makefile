@@ -28,7 +28,7 @@ $(NAME) : $(OBJS)
 	${CC} ${CFLAGS} ${SRCS} -o ${NAME}
 
 %.o:%.c
-	${CC} ${CFLAGS} -o $@ -c $<
+	${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
 clean :
 	${RM} ${OBJS}
