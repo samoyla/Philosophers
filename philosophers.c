@@ -18,12 +18,12 @@ int	main(int ac, char **av)
 
 	if ((check_args(ac, av, &data)) == 1)
 		ft_putstr_fd("check your arguments\n", 2);
-	printf("there are %d philo\n", data.nb_ph);
+/*	printf("there are %d philo\n", data.nb_ph);
 	printf("time to die %d\n", data.t_death);
 	printf("time to eat %d\n", data.t_eat);
 	printf("time to sleep %d\n", data.t_sleep);
 	printf("each philo ate %d times\n", data.meals);
 	printf("right fork id: %d\n", data.philo->r_fork);
-	printf("left fork id: %d\n", data.philo->l_fork);
+	printf("left fork id: %d\n", data.philo->l_fork);*/
 	return (0);
 }

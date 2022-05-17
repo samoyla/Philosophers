@@ -12,11 +12,15 @@
 
 #include "philosophers.h"
 
-int	create_thread(t_data *data)
+/*int	create_thread(t_data *data)
 {
 
 }
 
+void	take_fork(t_data *data)
+{
+	pthread_mutex_lock();
+}*/
 
 void	*start_routine(void *args)
 {
@@ -24,8 +28,13 @@ void	*start_routine(void *args)
 
 	data = args;
 
-	pthread_mutex_lock(&data->philo->fork);
+	pthread_mutex_lock(&data->philo->l_fork);
 	printf("philo %d is doing his routine\n", data->nb_ph);
-	pthread_mutex_unlock(&data->philo->fork);
+	pthread_mutex_unlock(&data->philo->r_fork);
 	return (0);
 }
+
+/*void eating()
+{
+	printf("");
+}*/

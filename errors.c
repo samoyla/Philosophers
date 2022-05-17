@@ -36,5 +36,5 @@ int	check_args(int ac, char **av, t_data *data)
 		return (1);
 	}
 	init_av(data, ac, av);
-	return (1);
+	return (0);
 }
