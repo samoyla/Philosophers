@@ -35,7 +35,7 @@ int	check_args(int ac, char **av, t_data *data)
 		philo_usage();
 		return (1);
 	}
-	if (init_av(data, ac, av) == 1)
-		ft_error();
+	if (init_av(data, av) == 1)
+		return (1);
 	return (0);
 }

@@ -14,41 +14,46 @@
 
 int	create_thread(t_data *data)
 {
-	printf("here\n");
-	//t_philo		*philo;
 	int			i;
-	pthread_t	th[data->nb_ph];
+	t_philo		*ph;
 
-	//philo = data->philo;
-	i = 0;
-	printf("i = %d\n", i);
-	if (pthread_mutex_init(&data->mutex, NULL) != 0)
-		perror("mutex failed\n");
-	while (i < data->nb_ph)
+	i = -1;
+	ph = data->philo;
+	// if (pthread_mutex_init(&(data->mutex), NULL) != 0)
+	// {
+	// 	perror("mutex failed\n");
+	// 	exit(EXIT_FAILURE);
+	// }
+	//init_mutex(data);
+	while (++i < data->nb_ph)
 	{
-		if (pthread_create(th + 1, NULL, &routine, NULL) != 0)
+		if (pthread_create(&(ph[i].philo_th), NULL, &routine, &(ph[i])) != 0)
 			perror("failed to create thread\n");
-		i++;
+		printf("Thread %d has started\n", i);
 	}
-	i = 0;
-	while (i < data->nb_ph)
+	i = -1;
+	while (++i < data->nb_ph)
 	{
-		if (pthread_join(th[i], NULL))
+		if (pthread_join(ph[i].philo_th, NULL) != 0)
 			return (1);
-		i++;
+		printf("Thread %d has finished execution\n", i);
 	}
-	pthread_mutex_destroy(&data->mutex);
+	pthread_mutex_destroy(&(data->mutex));
 	return (0);
 }
 
 void	*routine(void *args)
 {
 	t_data	*data;
+	int		i ;
 
 	data = args;
-
-	pthread_mutex_lock(&data->mutex);
-	printf("philo %d is doing his routine\n", data->nb_ph);
-	pthread_mutex_unlock(&data->mutex);
+	i = -1;
+	while (++i < data->nb_ph)
+	{
+		pthread_mutex_lock(&(data->mutex));
+		printf("y a un truc qui se passe\n");
+		pthread_mutex_unlock(&(data->mutex));
+	}
 	return (0);
 }
