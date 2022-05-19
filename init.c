@@ -65,8 +65,8 @@ int	init_av(t_data *data, char **av)
 	}
 	else
 		data->meals = -1;
-	if (init_mutex(data))
-		return (1);
+	// if (init_mutex(data))
+	// 	return (1);
 	data = init_philo(data);
 	return (0);
 }

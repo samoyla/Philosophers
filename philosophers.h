@@ -35,7 +35,7 @@ typedef struct s_data
 	int				t_eat;
 	int				t_sleep;
 	int				meals;
-	//pthread_mutex_t	forks[200];
+	pthread_mutex_t	forks[200];
 	pthread_mutex_t	mutex;
 	t_philo			philo[200];
 }t_data;
@@ -49,6 +49,8 @@ void	philo_usage(void);
 int		check_args(int ac, char **av, t_data *data);
 void	*routine(void *args);
 int		create_thread(t_data *data);
+void	take_forks(t_data *data);
+void	free_forks(t_data *data);
 //utils
 int		ft_atoi(const char *nptr);
 void	ft_putstr_fd(char *s, int fd);
