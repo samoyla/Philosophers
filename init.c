@@ -17,13 +17,15 @@ int	init_mutex(t_data *data)
 	int	i;
 
 	i = data->nb_ph;
+	if (pthread_mutex_init(&(data->message), NULL) != 0)
+	{
+		printf("\033[91minitiation message failed\033\n");
+		return (EXIT_FAILURE);
+	}
 	while (--i >= 0)
 	{
-		if (pthread_mutex_init(&(data->mutex), NULL) != 0)
-		{
-			perror("mutex failed\n");
+		if (pthread_mutex_init(&(data->forks[i]), NULL) != 0)
 			return (EXIT_FAILURE);
-		}
 	}
 	return (0);
 }
@@ -39,6 +41,7 @@ t_data	*init_philo(t_data *data)
 		data->philo[i].l_fork = i;
 		data->philo[i].r_fork = (i + 1) % data->nb_ph;
 	}
+	init_mutex(data);
 	return (data);
 }
 
@@ -48,7 +51,7 @@ int	init_av(t_data *data, char **av)
 	data->t_death = ft_atoi(av[2]);
 	data->t_eat = ft_atoi(av[3]);
 	data->t_sleep = ft_atoi(av[4]);
-	if ((data->nb_ph) < 2 || (data->nb_ph) > 200 || (data->t_death) < 60
+	if ((data->nb_ph) > 200 || (data->t_death) < 60
 		|| (data->t_eat) < 60 || (data->t_sleep) < 60)
 	{
 		ft_putstr_fd("at least one of the parameter is wrong\n", 2);
@@ -65,8 +68,6 @@ int	init_av(t_data *data, char **av)
 	}
 	else
 		data->meals = -1;
-	// if (init_mutex(data))
-	// 	return (1);
 	data = init_philo(data);
 	return (0);
 }

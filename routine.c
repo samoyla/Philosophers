@@ -19,92 +19,80 @@ int	create_thread(t_data *data)
 
 	i = -1;
 	ph = data->philo;
-	if (pthread_mutex_init(&(data->mutex), NULL) != 0)
-	{
-		perror("mutex failed\n");
-		return (EXIT_FAILURE);
-	}
 	while (++i < data->nb_ph)
 	{
 		if (pthread_create(&(ph[i].philo_th), NULL, &routine, &(ph[i])) != 0)
 			perror("failed to create thread\n");
 		printf("Thread %d has started\n", i);
 	}
-	// i = -1;
-	// while (++i < data->nb_ph)
-	// {
-	// 	printf("philo = %d\n", i);
-	// 	if (pthread_join(ph[i].philo_th, NULL) != 0)
-	// 		return (EXIT_FAILURE);
-	// 	printf("Thread %d has finished execution\n", i);
-	// }
-	i = 0;
-	while (i < data->nb_ph)
-	{
-		if (pthread_join(ph[i].philo_th, NULL) != 0)
-		{
-			printf("\033[91mJoin of thread failed\033\n");
-		}
-		i++;
-	}
-	pthread_mutex_destroy(&(data->mutex));
+	join_n_destroy(data);
 	return (0);
 }
 
-/*void	*routine(void *args)
+void	join_n_destroy(t_data *data)
 {
-	t_data	*data;
-	int		i ;
+	int			i;
+	t_philo		*ph;
 
-	data = args;
 	i = -1;
+	ph = data->philo;
 	while (++i < data->nb_ph)
 	{
-		pthread_mutex_lock(&(data->mutex));
-		printf("y a un truc qui se passe\n");
-		pthread_mutex_unlock(&(data->mutex));
+		pthread_join(ph[i].philo_th, NULL);
+		printf("Thread %d has finished execution\n", i);
 	}
-	return (0);
-}*/
+	i = -1;
+	while (++i < data->nb_ph)
+		pthread_mutex_destroy(&(data->forks[i]));
+	pthread_mutex_destroy(&(data->message));
+}
 
-void	take_forks(t_data *data)
+void	pickup_forks(t_data *data, t_philo *philo)
 {	
-	if (data->philo->id % 2 == 0)
+	printf("forks or not ?\n");
+	if (philo->id % 2 == 0)
 	{
-		pthread_mutex_lock(&(data->forks[data->philo->l_fork]));
-		printf("\033[92mhas taken a fork\033\n");
-		pthread_mutex_lock(&(data->forks[data->philo->r_fork]));
-		printf("\033[92mhas taken a fork\033\n");
+		pthread_mutex_lock(&(data->forks[philo->l_fork]));
+		message(philo->id, data, "\033[92mhas taken a fork\033\n");
+		printf("%d\n", philo->r_fork);
+		pthread_mutex_lock(&(data->forks[philo->r_fork]));
+		message(philo->id, data, "\033[92mhas taken a fork\033\n");
 	}
 	else
 	{
-		pthread_mutex_lock(&(data->forks[data->philo->r_fork]));
-		printf("\033[92mhas taken a fork\033\n");
-		pthread_mutex_lock(&(data->forks[data->philo->l_fork]));
-		printf("\033[92mhas taken a fork\033\n");
+		printf("and here ?\n");
+		printf("%d\n", philo->r_fork);
+		pthread_mutex_lock(&(data->forks[philo->r_fork]));
+		message(philo->id, data, "\033[92mhas taken a fork\033\n");
+		pthread_mutex_lock(&(data->forks[philo->l_fork]));
+		message(philo->id, data, "\033[92mhas taken a fork\033\n");
 	}
 }
 
-void	free_forks(t_data *data)
+void	free_forks(t_data *data, t_philo *philo)
 {	
-	if (data->philo->id % 2 == 0)
+	if (philo->id % 2 == 0)
 	{
-		pthread_mutex_unlock(&(data->forks[data->philo->l_fork]));
-		pthread_mutex_unlock(&(data->forks[data->philo->r_fork]));
+		pthread_mutex_unlock(&(data->forks[philo->l_fork]));
+		pthread_mutex_unlock(&(data->forks[philo->r_fork]));
 	}
 	else
 	{
-		pthread_mutex_unlock(&(data->forks[data->philo->r_fork]));
-		pthread_mutex_unlock(&(data->forks[data->philo->l_fork]));
+		pthread_mutex_unlock(&(data->forks[philo->r_fork]));
+		pthread_mutex_unlock(&(data->forks[philo->l_fork]));
 	}
 }
 
 void	*routine(void *args)
 {
 	t_data	*data;
+	t_philo	*philo;
 
-	data = (t_data*)args;
-	take_forks(data);
-	free_forks(data);
+	data = (t_data *)args;
+	philo = data->philo;
+	if (philo->id % 2 == 0)
+		usleep(15000);
+	pickup_forks(data, philo);
+	free_forks(data, philo);
 	return (0);
 }

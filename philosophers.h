@@ -25,7 +25,6 @@ typedef struct s_philo
 	int				l_fork;
 	int				r_fork;
 	pthread_t		philo_th;
-	//struct s_data	*data;
 }t_philo;
 
 typedef struct s_data
@@ -36,7 +35,7 @@ typedef struct s_data
 	int				t_sleep;
 	int				meals;
 	pthread_mutex_t	forks[200];
-	pthread_mutex_t	mutex;
+	pthread_mutex_t	message;
 	t_philo			philo[200];
 }t_data;
 
@@ -47,10 +46,13 @@ int		init_mutex(t_data *data);
 t_data	*init_philo(t_data *data);
 void	philo_usage(void);
 int		check_args(int ac, char **av, t_data *data);
+//routine-threads
 void	*routine(void *args);
 int		create_thread(t_data *data);
-void	take_forks(t_data *data);
-void	free_forks(t_data *data);
+void	pickup_forks(t_data *data, t_philo *philo);
+void	free_forks(t_data *data, t_philo *philo);
+void	message(int ph_id, t_data *data, char *s);
+void	join_n_destroy(t_data *data);
 //utils
 int		ft_atoi(const char *nptr);
 void	ft_putstr_fd(char *s, int fd);

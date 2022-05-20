@@ -14,3 +14,10 @@
 			ft_error();
 	}
 	pthread_mutex_destroy(&philo.fork);*/
+
+
+// if ((data->nb_ph) == 1)
+	// {
+	// 	printf("There's only one philo who'll eventually die");
+	// 	return (1);
+	// }
