@@ -1,26 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philosophers.c                                     :+:      :+:    :+:   */
+/*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: masamoil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/09 18:11:45 by masamoil          #+#    #+#             */
-/*   Updated: 2022/05/13 09:55:33 by masamoil         ###   ########.fr       */
+/*   Created: 2022/05/23 16:38:12 by masamoil          #+#    #+#             */
+/*   Updated: 2022/05/23 16:38:14 by masamoil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"                      
+#include "philosophers.h"
 
-int	main(int ac, char **av)
+long int	get_the_time(void)
 {
-	t_data		data;
-	
-	if ((check_args(ac, av, &data)) == 1)
+	long long		ms;
+	struct timeval	time;
+
+	ms = 0;
+	if (gettimeofday(&time, NULL) == -1)
+		ft_error();
+	ms = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	return (ms);
+}
+
+void	wait(long long time, t_data *data)
+{
+	long long	i;
+
+	i = get_the_time();
+	while (!data->dead)
 	{
-		ft_putstr_fd("check your arguments\n", 2);
-		return (EXIT_FAILURE);
+		if ((get_the_time() - i) >= time)
+			break ;
 	}
-	create_thread(&data);
-	return (0);
 }

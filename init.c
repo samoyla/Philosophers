@@ -17,33 +17,32 @@ int	init_mutex(t_data *data)
 	int	i;
 
 	i = data->nb_ph;
-	if (pthread_mutex_init(&(data->message), NULL) != 0)
-	{
-		printf("\033[91minitiation message failed\033\n");
-		return (EXIT_FAILURE);
-	}
+	if (pthread_mutex_init(&data->message, NULL) != 0)
+		return (1);
+	if (pthread_mutex_init(&data->meal_check, NULL) != 0)
+		return (1);
 	while (--i >= 0)
 	{
-		if (pthread_mutex_init(&(data->forks[i]), NULL) != 0)
-			return (EXIT_FAILURE);
+		if (pthread_mutex_init(&data->forks[i], NULL) != 0)
+			return (1);
 	}
 	return (0);
 }
 
-t_data	*init_philo(t_data *data)
-{
-	int	i;
+// int	init_philo(t_data *data)
+// {
+// 	int	i;
 
-	i = data->nb_ph;
-	while (--i >= 0)
-	{
-		data->philo[i].id = i;
-		data->philo[i].l_fork = i;
-		data->philo[i].r_fork = (i + 1) % data->nb_ph;
-	}
-	init_mutex(data);
-	return (data);
-}
+// 	i = data->nb_ph;
+// 	while (--i >= 0)
+// 	{
+// 		data->philo[i].id = i;
+// 		data->philo[i].l_fork = i;
+// 		data->philo[i].r_fork = (i + 1) % data->nb_ph;
+// 		//data->philo->data = data;
+// 	}
+// 	return (0);
+// }
 
 int	init_av(t_data *data, char **av)
 {
@@ -68,6 +67,19 @@ int	init_av(t_data *data, char **av)
 	}
 	else
 		data->meals = -1;
-	data = init_philo(data);
+	// init_philo(data);
+	int i;
+	i = data->nb_ph;
+	while (--i >= 0)
+	{
+		data->philo[i].id = i;
+		data->philo[i].l_fork = i;
+		data->philo[i].r_fork = (i + 1) % data->nb_ph;
+		data->philo[i].data = data;
+		data->philo[i].ate = 0;
+		data->philo[i].last_meal = 0;
+	}
+	if (init_mutex(data))
+		return (1);
 	return (0);
 }

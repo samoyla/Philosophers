@@ -71,7 +71,11 @@ int	ft_isdigit(int c)
 void	message(int ph_id, t_data *data, char *s)
 {
 	pthread_mutex_lock(&(data->message));
-	printf("\033[00m%i \033 ", (ph_id + 1));
-	printf("%s", s);
+	if (data->dead == 0)
+	{
+		printf("\033[00m%li ms \033 ", get_the_time() -  data->first_time);
+		printf("\033[00m%i \033 ", (ph_id + 1));
+		printf("%s", s);
+	}
 	pthread_mutex_unlock(&(data->message));
 }

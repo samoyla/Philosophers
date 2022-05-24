@@ -12,60 +12,21 @@
 
 #include "philosophers.h"
 
-int	create_thread(t_data *data)
-{
-	int			i;
-	t_philo		*ph;
-
-	i = -1;
-	ph = data->philo;
-	while (++i < data->nb_ph)
-	{
-		if (pthread_create(&(ph[i].philo_th), NULL, &routine, &(ph[i])) != 0)
-			perror("failed to create thread\n");
-		printf("Thread %d has started\n", i);
-	}
-	join_n_destroy(data);
-	return (0);
-}
-
-void	join_n_destroy(t_data *data)
-{
-	int			i;
-	t_philo		*ph;
-
-	i = -1;
-	ph = data->philo;
-	while (++i < data->nb_ph)
-	{
-		pthread_join(ph[i].philo_th, NULL);
-		printf("Thread %d has finished execution\n", i);
-	}
-	i = -1;
-	while (++i < data->nb_ph)
-		pthread_mutex_destroy(&(data->forks[i]));
-	pthread_mutex_destroy(&(data->message));
-}
-
 void	pickup_forks(t_data *data, t_philo *philo)
 {	
-	printf("forks or not ?\n");
 	if (philo->id % 2 == 0)
 	{
-		pthread_mutex_lock(&(data->forks[philo->l_fork]));
-		message(philo->id, data, "\033[92mhas taken a fork\033\n");
-		printf("%d\n", philo->r_fork);
-		pthread_mutex_lock(&(data->forks[philo->r_fork]));
-		message(philo->id, data, "\033[92mhas taken a fork\033\n");
+		pthread_mutex_lock(&data->forks[philo->l_fork]);
+		message(philo->id, data, "\033[92mhas taken the left fork\033\n");
+		pthread_mutex_lock(&data->forks[philo->r_fork]);
+		message(philo->id, data, "\033[92mhas taken the right fork\033\n");
 	}
 	else
 	{
-		printf("and here ?\n");
-		printf("%d\n", philo->r_fork);
-		pthread_mutex_lock(&(data->forks[philo->r_fork]));
-		message(philo->id, data, "\033[92mhas taken a fork\033\n");
-		pthread_mutex_lock(&(data->forks[philo->l_fork]));
-		message(philo->id, data, "\033[92mhas taken a fork\033\n");
+		pthread_mutex_lock(&data->forks[philo->r_fork]);
+		message(philo->id, data, "\033[92mhas taken the right fork\033\n");
+		pthread_mutex_lock(&data->forks[philo->l_fork]);
+		message(philo->id, data, "\033[92mhas taken the left fork\033\n");
 	}
 }
 
@@ -83,16 +44,43 @@ void	free_forks(t_data *data, t_philo *philo)
 	}
 }
 
+void	eat(t_data *data, t_philo *philo)
+{
+	if (philo->ate != data->meals)
+	{
+		pthread_mutex_lock(&data->meal_check);
+		philo->ate++;
+		message(philo->id, data, "\033[33mis eating\033\n");
+		philo->last_meal = get_the_time();
+		pthread_mutex_unlock(&data->meal_check);
+	}
+	wait(data->t_eat, data);
+}
+
+void	sleep_and_think(t_data *data, t_philo *ph)
+{
+	message(ph->id, data, "\033[96mis sleeping\033\n");
+	wait(data->t_sleep, data);
+	message(ph->id, data, "\033[37mis thinking\033\n");
+}
+
 void	*routine(void *args)
 {
 	t_data	*data;
 	t_philo	*philo;
 
-	data = (t_data *)args;
-	philo = data->philo;
+	philo = (t_philo *)args;
+	data = philo->data;
 	if (philo->id % 2 == 0)
 		usleep(15000);
-	pickup_forks(data, philo);
-	free_forks(data, philo);
+	while (!data->dead)
+	{
+		if (data->if_all_ate == 1)
+			break ;
+		pickup_forks(data, philo);
+		eat(data, philo);
+		free_forks(data, philo);
+		sleep_and_think(data, philo);
+	}
 	return (0);
 }
