@@ -20,6 +20,7 @@
 # include <limits.h>
 # include <sys/time.h>
 # include <time.h>
+# include <string.h>
 
 typedef struct s_philo
 {
@@ -56,6 +57,7 @@ int		check_args(int ac, char **av, t_data *data);
 int		init_av(t_data *data, char **av);
 int		init_mutex(t_data *data);
 int		init_philo(t_data *data);
+void	init_data(t_data *data);
 
 
 //routine-threads
@@ -68,7 +70,9 @@ void	sleep_and_think(t_data *data, t_philo *ph);
 void	message(int ph_id, t_data *data, char *s);
 void	join_n_destroy(t_data *data);
 void	death_check(t_data *data, t_philo *ph);
-long int    get_the_time(void);
+long long   get_the_time(void);
+long long	ft_timediff(long long present, long long past);
+void	ft_usleep(long int time);
 void	wait(long long time, t_data *data);
 //utils
 int		ft_atoi(const char *nptr);

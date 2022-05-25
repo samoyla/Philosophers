@@ -17,16 +17,16 @@ void	pickup_forks(t_data *data, t_philo *philo)
 	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_lock(&data->forks[philo->l_fork]);
-		message(philo->id, data, "\033[92mhas taken the left fork\033\n");
+		message(philo->id, data, "\033[92mhas taken a fork\033\n");
 		pthread_mutex_lock(&data->forks[philo->r_fork]);
-		message(philo->id, data, "\033[92mhas taken the right fork\033\n");
+		message(philo->id, data, "\033[92mhas taken a fork\033\n");
 	}
 	else
 	{
 		pthread_mutex_lock(&data->forks[philo->r_fork]);
-		message(philo->id, data, "\033[92mhas taken the right fork\033\n");
+		message(philo->id, data, "\033[92mhas taken a fork\033\n");
 		pthread_mutex_lock(&data->forks[philo->l_fork]);
-		message(philo->id, data, "\033[92mhas taken the left fork\033\n");
+		message(philo->id, data, "\033[92mhas taken a fork\033\n");
 	}
 }
 
@@ -72,7 +72,7 @@ void	*routine(void *args)
 	philo = (t_philo *)args;
 	data = philo->data;
 	if (philo->id % 2 == 0)
-		usleep(15000);
+		usleep(1500);
 	while (!data->dead)
 	{
 		if (data->if_all_ate == 1)

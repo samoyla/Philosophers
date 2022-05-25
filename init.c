@@ -44,8 +44,21 @@ int	init_mutex(t_data *data)
 // 	return (0);
 // }
 
+void	init_data(t_data *data)
+{
+	data->first_time = get_the_time();
+	data->dead = 0;
+	data->meals = 0;
+	data->if_all_ate = 0;
+	data->nb_ph = 0;
+	data->t_death = 0;
+	data->t_eat = 0;
+	data->t_sleep = 0;
+}
+
 int	init_av(t_data *data, char **av)
 {
+	init_data(data);
 	data->nb_ph = ft_atoi(av[1]);
 	data->t_death = ft_atoi(av[2]);
 	data->t_eat = ft_atoi(av[3]);
@@ -75,9 +88,9 @@ int	init_av(t_data *data, char **av)
 		data->philo[i].id = i;
 		data->philo[i].l_fork = i;
 		data->philo[i].r_fork = (i + 1) % data->nb_ph;
-		data->philo[i].data = data;
 		data->philo[i].ate = 0;
 		data->philo[i].last_meal = 0;
+		data->philo[i].data = data;
 	}
 	if (init_mutex(data))
 		return (1);
