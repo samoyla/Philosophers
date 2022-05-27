@@ -26,16 +26,3 @@ void	philo_usage(void)
 	ft_putstr_fd("-time_to_eat\n", 1);
 	ft_putstr_fd("-time_to_sleep\n", 1);
 }
-
-
-int	check_args(int ac, char **av, t_data *data)
-{
-	if (ac < 5 || ac > 6)
-	{
-		philo_usage();
-		return (1);
-	}
-	if (init_av(data, av) == 1)
-		return (1);
-	return (0);
-}

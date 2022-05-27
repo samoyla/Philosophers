@@ -30,7 +30,7 @@ void	pickup_forks(t_data *data, t_philo *philo)
 	}
 }
 
-void	free_forks(t_data *data, t_philo *philo)
+void	unleash_forks(t_data *data, t_philo *philo)
 {	
 	if (philo->id % 2 == 0)
 	{
@@ -51,8 +51,8 @@ void	eat(t_data *data, t_philo *philo)
 		pthread_mutex_lock(&data->meal_check);
 		philo->ate++;
 		message(philo->id, data, "\033[33mis eating\033\n");
-		philo->last_meal = get_the_time();
-		pthread_mutex_unlock(&data->meal_check);
+		philo->t_last_meal = get_the_time();
+		pthread_mutex_unlock(&(data->meal_check));
 	}
 	wait(data->t_eat, data);
 }
@@ -73,13 +73,13 @@ void	*routine(void *args)
 	data = philo->data;
 	if (philo->id % 2 == 0)
 		usleep(1500);
-	while (!data->dead)
+	while (!(data->dead))
 	{
 		if (data->if_all_ate == 1)
 			break ;
 		pickup_forks(data, philo);
 		eat(data, philo);
-		free_forks(data, philo);
+		unleash_forks(data, philo);
 		sleep_and_think(data, philo);
 	}
 	return (0);

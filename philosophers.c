@@ -16,8 +16,13 @@ int	main(int ac, char **av)
 {
 	t_data		data;
 
-	//memset(&data, 0, sizeof(t_data));
-	if ((check_args(ac, av, &data)) == 1)
+	memset(&data, 0, sizeof(t_data));
+	if (ac < 5 || ac > 6)
+	{
+		philo_usage();
+		return (1);
+	}
+	if (check_args(&data, av) == 1)
 	{
 		ft_putstr_fd("check your arguments\n", 2);
 		return (EXIT_FAILURE);

@@ -24,14 +24,14 @@ int	create_thread(t_data *data)
 	{
 		if (pthread_create(&(ph[i].philo_th), NULL, &routine, &(ph[i])) != 0)
 			perror("failed to create thread\n");
-		ph[i].last_meal = get_the_time();
+		ph[i].t_last_meal = get_the_time();
 	}
-	death_check(data, data->philo);
+	death_check(data, ph);
 	join_n_destroy(data);
 	if (data->if_all_ate == 1)
 	{
 		usleep(1500);
-		printf("each philosopher ate %d times, no one died !\n", data->meals);
+		printf("all philosophers ate %d times, no one died !\n", data->meals);
 		printf("the END");
 	}
 	return (0);
@@ -67,15 +67,15 @@ void	death_check(t_data *data, t_philo *ph)
 	while (data->if_all_ate == 0)
 	{
 		i = -1;
-		while (i++ < data->nb_ph && !(data->dead))
+		while (++i < data->nb_ph && !(data->dead))
 		{
 			pthread_mutex_lock(&(data->meal_check));
-			if (ft_timediff(get_the_time(), ph[i].last_meal) > data->t_death)
+			if (ft_timediff(get_the_time(), ph[i].t_last_meal) > data->t_death)
 			{
 				message(i, data, "\033[91mdied\033\n");
 				data->dead = 1;
 			}
-			pthread_mutex_unlock(&data->meal_check);
+			pthread_mutex_unlock(&(data->meal_check));
 			usleep(100);
 		}
 		if (data->dead == 1)
