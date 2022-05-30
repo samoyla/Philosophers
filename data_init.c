@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masamoil <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:11:52 by masamoil          #+#    #+#             */
-/*   Updated: 2022/05/26 11:11:54 by masamoil         ###   ########.fr       */
+/*   Updated: 2022/05/30 21:49:43 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	init_mutex(t_data *data)
 int	check_args(t_data *data, char **av)
 {	
 	init_data_av(data, av);
-	if ((data->nb_ph) > 200 || (data->t_death) < 60
+	if ((data->nb_ph) > 200 || (data->nb_ph < 1) || (data->t_death) < 60
 		|| (data->t_eat) < 60 || (data->t_sleep) < 60)
 	{
 		ft_putstr_fd("at least one of the parameter is wrong\n", 2);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masamoil <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 11:17:02 by masamoil          #+#    #+#             */
-/*   Updated: 2022/05/11 11:17:18 by masamoil         ###   ########.fr       */
+/*   Updated: 2022/05/30 21:56:19 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ void	message(int ph_id, t_data *data, char *s)
 	pthread_mutex_lock(&(data->message));
 	if (data->dead == 0)
 	{
-		printf("\033[00m%li ms \033 ", get_the_time() - data->first_time);
-		printf("\033[00m%i \033 ", (ph_id + 1));
+		printf("\033[00m%li ms \033[0m ", get_the_time() - data->first_time);
+		printf("\033[00m%i \033[0m ", (ph_id + 1));
 		printf("%s", s);
 	}
 	pthread_mutex_unlock(&(data->message));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masamoil <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:17:49 by masamoil          #+#    #+#             */
-/*   Updated: 2022/05/19 16:52:49 by masamoil         ###   ########.fr       */
+/*   Updated: 2022/05/30 22:06:24 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@ void	pickup_forks(t_data *data, t_philo *philo)
 	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_lock(&data->forks[philo->l_fork]);
-		message(philo->id, data, "\033[92mhas taken a fork\033\n");
+		message(philo->id, data, "\033[92mhas taken a fork\033[0\n");
 		pthread_mutex_lock(&data->forks[philo->r_fork]);
-		message(philo->id, data, "\033[92mhas taken a fork\033\n");
+		message(philo->id, data, "\033[92mhas taken a fork\033[0\n");
 	}
 	else
 	{
 		pthread_mutex_lock(&data->forks[philo->r_fork]);
-		message(philo->id, data, "\033[92mhas taken a fork\033\n");
+		message(philo->id, data, "\033[92mhas taken a fork\033[0\n");
 		pthread_mutex_lock(&data->forks[philo->l_fork]);
-		message(philo->id, data, "\033[92mhas taken a fork\033\n");
+		message(philo->id, data, "\033[92mhas taken a fork\033[0\n");
 	}
 }
 
@@ -50,7 +50,7 @@ void	eat(t_data *data, t_philo *philo)
 	{
 		pthread_mutex_lock(&data->meal_check);
 		philo->ate++;
-		message(philo->id, data, "\033[33mis eating\033\n");
+		message(philo->id, data, "\033[33mis eating\033[0\n");
 		philo->t_last_meal = get_the_time();
 		pthread_mutex_unlock(&(data->meal_check));
 	}
@@ -59,9 +59,9 @@ void	eat(t_data *data, t_philo *philo)
 
 void	sleep_and_think(t_data *data, t_philo *ph)
 {
-	message(ph->id, data, "\033[96mis sleeping\033\n");
+	message(ph->id, data, "\033[96mis sleeping\033[0\n");
 	wait(data->t_sleep, data);
-	message(ph->id, data, "\033[37mis thinking\033\n");
+	message(ph->id, data, "\033[37mis thinking\033[0\n");
 }
 
 void	*routine(void *args)

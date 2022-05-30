@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masamoil <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 18:11:45 by masamoil          #+#    #+#             */
-/*   Updated: 2022/05/13 09:55:33 by masamoil         ###   ########.fr       */
+/*   Updated: 2022/05/30 22:09:33 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(int ac, char **av)
 	if (ac < 5 || ac > 6)
 	{
 		philo_usage();
-		return (1);
+		return (EXIT_FAILURE);
 	}
 	if (check_args(&data, av) == 1)
 	{

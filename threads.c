@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masamoil <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 15:15:17 by masamoil          #+#    #+#             */
-/*   Updated: 2022/05/23 15:15:19 by masamoil         ###   ########.fr       */
+/*   Updated: 2022/05/30 22:00:56 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ int	create_thread(t_data *data)
 	}
 	death_check(data, ph);
 	join_n_destroy(data);
-	if (data->if_all_ate == 1)
-	{
-		usleep(1500);
-		printf("all philosophers ate %d times, no one died !\n", data->meals);
-		printf("the END");
-	}
+	// if (data->if_all_ate == 1 && data->meals != -1)
+	// {
+	// 	usleep(1500);
+	// 	printf("all philosophers ate %d times, no one died !\n", data->meals);
+	// 	printf("the END");
+	// }
 	return (0);
 }
 
@@ -41,12 +41,12 @@ void	join_n_destroy(t_data *data)
 {
 	int			i;
 	t_philo		*ph;
-
+	
+	ph = data->philo;
 	if (data->nb_ph == 1)
 		i = 0;
 	else
 		i = -1;
-	ph = data->philo;
 	while (++i < data->nb_ph)
 	{
 		pthread_join(ph[i].philo_th, NULL);
@@ -72,7 +72,7 @@ void	death_check(t_data *data, t_philo *ph)
 			pthread_mutex_lock(&(data->meal_check));
 			if (ft_timediff(get_the_time(), ph[i].t_last_meal) > data->t_death)
 			{
-				message(i, data, "\033[91mdied\033\n");
+				message(i, data, "\033[91mdied\033[0\n");
 				data->dead = 1;
 			}
 			pthread_mutex_unlock(&(data->meal_check));

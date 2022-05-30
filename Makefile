@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: masamoil <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/09 17:44:31 by masamoil          #+#    #+#              #
-#    Updated: 2022/05/09 17:46:54 by masamoil         ###   ########.fr        #
+#    Updated: 2022/05/30 22:09:23 by marvin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRCS	= philosophers.c errors.c data_init.c utils.c\
 
 OBJS = ${SRCS:.c=.o}
 
-CC = clang
+CC = gcc
 
 RM = rm -f
 
