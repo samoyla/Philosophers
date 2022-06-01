@@ -49,16 +49,21 @@ typedef struct s_data
 	pthread_mutex_t	meal_check;
 }t_data;
 
-
+//check-args
+int			check_av_digit(char **av);
+int			check_size_of_arg(char **av);
+int			ft_check(char **av);
+int			check_args(t_data *data, char **av);
+void		ft_error(void);
+void		philo_usage(void);
 //init
 void		init_philo(t_data *data);
 int			init_mutex(t_data *data);
 void		init_data(t_data *data);
 void		init_data_av(t_data *data, char **av);
-int			check_args(t_data *data, char **av);
 //threads
 int			create_thread(t_data *data);
-void		join_n_destroy(t_data *data);
+void		join_n_destroy(t_data *data, t_philo *ph);
 //routine
 void		*routine(void *args);
 void		pickup_forks(t_data *data, t_philo *philo);
@@ -68,16 +73,14 @@ void		sleep_and_think(t_data *data, t_philo *ph);
 void		message(int ph_id, t_data *data, char *s);
 void		death_check(t_data *data, t_philo *ph);
 //time fcts
-long int	get_the_time(void);
+long int	get_time_ms(void);
 long long	ft_timediff(long long present, long long past);
-void		ft_usleep(long int time);
 void		wait(long long time, t_data *data);
 //utils
 int			ft_atoi(const char *nptr);
 void		ft_putstr_fd(char *s, int fd);
 size_t		ft_strlen(const char *s);
 int			ft_isdigit(int c);
-void		ft_error(void);
-void		philo_usage(void);
+int			ft_strcmp(const char *s1, const char *s2);
 
 #endif

@@ -68,14 +68,16 @@ int	ft_isdigit(int c)
 		return (0);
 }
 
-void	message(int ph_id, t_data *data, char *s)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	pthread_mutex_lock(&(data->message));
-	if (data->dead == 0)
+	size_t	i;
+
+	i = 0;
+	while ((s1[i] || s2[i]))
 	{
-		printf("\033[00m%li ms \033[0m ", get_the_time() - data->first_time);
-		printf("\033[00m%i \033[0m ", (ph_id + 1));
-		printf("%s", s);
+		if (s1[i] != s2[i])
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		i++;
 	}
-	pthread_mutex_unlock(&(data->message));
+	return (0);
 }

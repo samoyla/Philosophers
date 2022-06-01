@@ -34,7 +34,6 @@ void	init_data_av(t_data *data, char **av)
 	data->t_death = ft_atoi(av[2]);
 	data->t_eat = ft_atoi(av[3]);
 	data->t_sleep = ft_atoi(av[4]);
-	data->meals = 0;
 }
 
 int	init_mutex(t_data *data)
@@ -51,31 +50,5 @@ int	init_mutex(t_data *data)
 		if (pthread_mutex_init(&(data->forks[i]), NULL) != 0)
 			return (1);
 	}
-	return (0);
-}
-
-int	check_args(t_data *data, char **av)
-{	
-	init_data_av(data, av);
-	if ((data->nb_ph) > 200 || (data->nb_ph < 1) || (data->t_death) < 60
-		|| (data->t_eat) < 60 || (data->t_sleep) < 60)
-	{
-		ft_putstr_fd("at least one of the parameter is wrong\n", 2);
-		return (1);
-	}
-	if (av[5])
-	{
-		data->meals = ft_atoi(av[5]);
-		if (data->meals <= 0)
-		{
-			ft_putstr_fd("wrong number of meals\n", 2);
-			return (1);
-		}
-	}
-	else
-		data->meals = -1;
-	init_philo(data);
-	if (init_mutex(data))
-		return (1);
 	return (0);
 }

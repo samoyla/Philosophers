@@ -3,40 +3,36 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
+#    By: masamoil <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/05/09 17:44:31 by masamoil          #+#    #+#              #
-#    Updated: 2022/05/30 22:09:23 by marvin           ###   ########.fr        #
+#    Created: 2022/05/31 17:06:21 by masamoil          #+#    #+#              #
+#    Updated: 2022/05/31 17:06:26 by masamoil         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
-SRCS	= philosophers.c errors.c data_init.c utils.c\
-		routine.c threads.c time.c
+SRC = philosophers.c errors.c data_init.c utils.c\
+		routine.c threads.c time.c parse.c
 
-OBJS = ${SRCS:.c=.o}
+OBJ = ${SRC:.c=.o}
 
-CC = gcc
+FLAGS = -Wall -Wextra -Werror -pthread -g3 #-fsanitize=thread
 
-RM = rm -f
+all: $(NAME)
 
-CFLAGS = -Wall -Wextra -Werror -g -pthread #-fsanitize=thread
+$(NAME): $(OBJ)
+	gcc $(FLAGS) $(OBJ) -o $(NAME) -g
 
-all : ${NAME}
+$(OBJ): $(SRC)
+	gcc $(FLAGS) -c $(SRC)
 
-$(NAME) : $(OBJS)
-	${CC} ${CFLAGS} ${SRCS} -o ${NAME}
+clean:
+	rm -f ${OBJ}
 
-%.o:%.c
-	${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
+fclean: clean
+	rm -rf $(NAME)
 
-clean :
-	${RM} ${OBJS}
-
-fclean : clean
-	${RM} ${NAME}
-
-re : fclean all
+re: fclean all
 
 .PHONY : clean fclean re

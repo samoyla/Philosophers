@@ -12,7 +12,7 @@
 
 #include "philosophers.h"
 
-long int	get_the_time(void)
+long int	get_time_ms(void)
 {
 	long long		ms;
 	struct timeval	time;
@@ -36,20 +36,11 @@ void	wait(long long time, t_data *data)
 {
 	long long	i;
 
-	i = get_the_time();
+	i = get_time_ms();
 	while (!(data->dead))
 	{
-		if (ft_timediff(get_the_time(), i) >= time)
+		if (ft_timediff(get_time_ms(), i) >= time)
 			break ;
 		usleep(50);
 	}
 }
-
-// void	ft_usleep(long int time)
-// {
-// 	long int	start;
-
-// 	start = get_the_time();
-// 	while (ft_timediff(get_the_time(), start) < time)
-// 		usleep(500);
-// }
