@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 15:15:17 by masamoil          #+#    #+#             */
-/*   Updated: 2022/05/30 22:00:56 by marvin           ###   ########.fr       */
+/*   Updated: 2022/06/02 17:54:45 by masamoil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,31 +57,42 @@ void	join_n_destroy(t_data *data, t_philo *ph)
 	pthread_mutex_destroy(&(data->message));
 }
 
+void	check_death_time(t_data *data, t_philo *ph)
+{
+	int	i;
+
+	i = -1;
+	while (++i < data->nb_ph && !(data->dead))
+	{
+		pthread_mutex_lock(&(data->meal_check));
+		if (ft_timediff(get_time_ms(), ph[i].t_last_meal) > data->t_death)
+		{
+			message(i, data, "\033[91mdied\033[0m\n");
+			data->dead = 1;
+		}
+		pthread_mutex_unlock(&(data->meal_check));
+	}
+}
+
 void	death_check(t_data *data, t_philo *ph)
 {
 	int	i;
 
 	while (data->if_all_ate == 0)
 	{
-		i = -1;
-		while (++i < data->nb_ph && !(data->dead))
-		{
-			pthread_mutex_lock(&(data->meal_check));
-			if (ft_timediff(get_time_ms(), ph[i].t_last_meal) > data->t_death)
-			{
-				message(i, data, "\033[91mdied\033[0m\n");
-				data->dead = 1;
-			}
-			pthread_mutex_unlock(&(data->meal_check));
-			usleep(100);
-		}
+		check_death_time(data, ph);
 		if (data->dead == 1)
 			break ;
 		i = 0;
-		while (data->meals != -1 && i < data->nb_ph && ph[i].ate >= data->meals)
+		while (data->meals != -1 && i < data->nb_ph
+			&& get_ph_ate(data, ph, i) >= data->meals)
 			i++;
 		if (i == data->nb_ph)
+		{
+			pthread_mutex_lock(&(data->meal_check));
 			data->if_all_ate = 1;
+			pthread_mutex_unlock(&(data->meal_check));
+		}
 	}
 }
 
@@ -90,7 +101,7 @@ void	message(int ph_id, t_data *data, char *s)
 	pthread_mutex_lock(&(data->message));
 	if (data->dead == 0)
 	{
-		printf("%li ms ", get_time_ms() - data->first_time);
+		printf("%li ", get_time_ms() - data->first_time);
 		printf("%i ", (ph_id + 1));
 		printf("%s", s);
 	}

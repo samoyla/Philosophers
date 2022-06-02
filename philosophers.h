@@ -6,7 +6,7 @@
 /*   By: masamoil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 18:07:59 by masamoil          #+#    #+#             */
-/*   Updated: 2022/05/09 18:08:03 by masamoil         ###   ########.fr       */
+/*   Updated: 2022/06/02 17:46:31 by masamoil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,9 @@ void		eat(t_data *data, t_philo *philo);
 void		unleash_forks(t_data *data, t_philo *philo);
 void		sleep_and_think(t_data *data, t_philo *ph);
 int			check_data_death(t_data *data);
+int			check_ate(t_data *data);
+int			get_ph_ate(t_data *data, t_philo *philo, int i);
+void		check_death_time(t_data *data, t_philo *ph);
 void		message(int ph_id, t_data *data, char *s);
 void		death_check(t_data *data, t_philo *ph);
 //time fcts
