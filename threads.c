@@ -17,14 +17,15 @@ int	create_thread(t_data *data)
 	int		i;
 	t_philo	*ph;
 
-	i = -1;
+	i = 0;
 	ph = data->philo;
 	data->first_time = get_time_ms();
-	while (++i < data->nb_ph)
+	while (i < data->nb_ph)
 	{
 		ph[i].t_last_meal = get_time_ms();
 		if (pthread_create(&(ph[i].philo_th), NULL, &routine, &(ph[i])) != 0)
-			perror("failed to create thread\n");
+			perror("failed to create a thread\n");
+		i++;
 	}
 	death_check(data, ph);
 	join_n_destroy(data, ph);

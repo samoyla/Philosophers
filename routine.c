@@ -64,6 +64,18 @@ void	sleep_and_think(t_data *data, t_philo *ph)
 	message(ph->id, data, "\033[37mis thinking\033[0m\n");
 }
 
+int	check_data_death(t_data *data)
+{
+	pthread_mutex_lock(&(data->meal_check));
+	if (!data->dead)
+	{
+		pthread_mutex_unlock(&(data->meal_check));
+		return (0);
+	}
+	pthread_mutex_unlock(&(data->meal_check));
+	return (1);
+}
+
 void	*routine(void *args)
 {
 	t_data	*data;
@@ -73,7 +85,7 @@ void	*routine(void *args)
 	data = philo->data;
 	if (philo->id % 2 == 0)
 		usleep(1500);
-	while (!(data->dead))
+	while (!check_data_death(data))
 	{
 		if (data->if_all_ate == 1)
 			break ;

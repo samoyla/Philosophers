@@ -17,6 +17,7 @@ int	main(int ac, char **av)
 	t_data		data;
 
 	memset(&data, 0, sizeof(t_data));
+	printf("%d\n", data.dead);
 	if (ac < 5 || ac > 6)
 	{
 		philo_usage();

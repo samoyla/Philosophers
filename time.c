@@ -40,7 +40,7 @@ void	wait(long long time, t_data *data)
 	long long	i;
 
 	i = get_time_ms();
-	while (!(data->dead))
+	while (!check_data_death(data))
 	{
 		if (ft_timediff(get_time_ms(), i) >= time)
 			break ;

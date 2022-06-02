@@ -17,7 +17,7 @@ SRC = philosophers.c data_init.c utils.c\
 
 OBJ = ${SRC:.c=.o}
 
-FLAGS = -Wall -Wextra -Werror -pthread -g3 #-fsanitize=thread
+FLAGS = -Wall -Wextra -Werror -pthread -g3 -fsanitize=thread
 
 all: $(NAME)
 

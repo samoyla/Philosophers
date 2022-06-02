@@ -69,6 +69,7 @@ void		pickup_forks(t_data *data, t_philo *philo);
 void		eat(t_data *data, t_philo *philo);
 void		unleash_forks(t_data *data, t_philo *philo);
 void		sleep_and_think(t_data *data, t_philo *ph);
+int			check_data_death(t_data *data);
 void		message(int ph_id, t_data *data, char *s);
 void		death_check(t_data *data, t_philo *ph);
 //time fcts
