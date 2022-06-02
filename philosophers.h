@@ -43,8 +43,8 @@ typedef struct s_data
 	int				if_all_ate;
 	int				dead;
 	long int		first_time;
-	t_philo			philo[200];
-	pthread_mutex_t	forks[200];
+	t_philo			philo[250];
+	pthread_mutex_t	forks[250];
 	pthread_mutex_t	message;
 	pthread_mutex_t	meal_check;
 }t_data;
@@ -54,7 +54,6 @@ int			check_av_digit(char **av);
 int			check_size_of_arg(char **av);
 int			ft_check(char **av);
 int			check_args(t_data *data, char **av);
-void		ft_error(void);
 void		philo_usage(void);
 //init
 void		init_philo(t_data *data);

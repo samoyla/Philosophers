@@ -19,7 +19,10 @@ long int	get_time_ms(void)
 
 	ms = 0;
 	if (gettimeofday(&time, NULL) == -1)
-		ft_error();
+	{
+		ft_putstr_fd("Error getimeofday\n", 2);
+		return (EXIT_FAILURE);
+	}
 	ms = (time.tv_sec * 1000) + (time.tv_usec / 1000);
 	return (ms);
 }

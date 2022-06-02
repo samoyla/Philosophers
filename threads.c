@@ -22,9 +22,9 @@ int	create_thread(t_data *data)
 	data->first_time = get_time_ms();
 	while (++i < data->nb_ph)
 	{
+		ph[i].t_last_meal = get_time_ms();
 		if (pthread_create(&(ph[i].philo_th), NULL, &routine, &(ph[i])) != 0)
 			perror("failed to create thread\n");
-		ph[i].t_last_meal = get_time_ms();
 	}
 	death_check(data, ph);
 	join_n_destroy(data, ph);
@@ -36,26 +36,22 @@ void	join_n_destroy(t_data *data, t_philo *ph)
 	int			i;
 
 	if (data->nb_ph == 1)
-		i = 1;
-	else
 		i = 0;
-	while (i < data->nb_ph)
+	else
+		i = -1;
+	while (++i < data->nb_ph)
 	{
 		if (pthread_join(ph[i].philo_th, NULL) != 0)
 		{
-			printf("Join of thread failed\n");
+			ft_putstr_fd("pthread_join failed\n", 2);
 			return ;
 		}
-		i++;
 	}
-	i = 0;
+	i = -1;
 	if (data->nb_ph != 1)
 	{
-		while (i < data->nb_ph)
-		{
+		while (++i < data->nb_ph)
 			pthread_mutex_destroy(&(data->forks[i]));
-			i++;
-		}
 	}
 	pthread_mutex_destroy(&(data->message));
 }

@@ -12,7 +12,7 @@
 
 NAME = philo
 
-SRC = philosophers.c errors.c data_init.c utils.c\
+SRC = philosophers.c data_init.c utils.c\
 		routine.c threads.c time.c parse.c
 
 OBJ = ${SRC:.c=.o}
@@ -24,8 +24,8 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	gcc $(FLAGS) $(OBJ) -o $(NAME) -g
 
-$(OBJ): $(SRC)
-	gcc $(FLAGS) -c $(SRC)
+.c.o:
+	gcc ${FLAGS} -c $< -o ${<:.c=.o}
 
 clean:
 	rm -f ${OBJ}

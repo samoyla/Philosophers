@@ -21,6 +21,8 @@ int	check_av_digit(char **av)
 	while (av[i])
 	{
 		j = 0;
+		if (av[i][0] == '\0')
+			return (1);
 		while (av[i][j] && ft_isdigit(av[i][j]))
 			j++;
 		if (av[i][j])
@@ -91,4 +93,13 @@ int	check_args(t_data *data, char **av)
 	if (init_mutex(data))
 		return (1);
 	return (0);
+}
+
+void	philo_usage(void)
+{
+	ft_putstr_fd("philo usage is following:\n", 1);
+	ft_putstr_fd("-number_of_philosopher\n", 1);
+	ft_putstr_fd("-time_to_die\n", 1);
+	ft_putstr_fd("-time_to_eat\n", 1);
+	ft_putstr_fd("-time_to_sleep\n", 1);
 }
