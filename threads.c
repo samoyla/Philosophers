@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 15:15:17 by masamoil          #+#    #+#             */
-/*   Updated: 2022/06/02 17:54:45 by masamoil         ###   ########.fr       */
+/*   Updated: 2022/06/03 16:22:54 by gmorange         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,37 +32,12 @@ int	create_thread(t_data *data)
 	return (0);
 }
 
-void	join_n_destroy(t_data *data, t_philo *ph)
-{
-	int			i;
-
-	if (data->nb_ph == 1)
-		i = 0;
-	else
-		i = -1;
-	while (++i < data->nb_ph)
-	{
-		if (pthread_join(ph[i].philo_th, NULL) != 0)
-		{
-			ft_putstr_fd("pthread_join failed\n", 2);
-			return ;
-		}
-	}
-	i = -1;
-	if (data->nb_ph != 1)
-	{
-		while (++i < data->nb_ph)
-			pthread_mutex_destroy(&(data->forks[i]));
-	}
-	pthread_mutex_destroy(&(data->message));
-}
-
 void	check_death_time(t_data *data, t_philo *ph)
 {
 	int	i;
 
-	i = -1;
-	while (++i < data->nb_ph && !(data->dead))
+	i = 0;
+	while (i < data->nb_ph && !(data->dead))
 	{
 		pthread_mutex_lock(&(data->meal_check));
 		if (ft_timediff(get_time_ms(), ph[i].t_last_meal) > data->t_death)
@@ -71,6 +46,7 @@ void	check_death_time(t_data *data, t_philo *ph)
 			data->dead = 1;
 		}
 		pthread_mutex_unlock(&(data->meal_check));
+		i++;
 	}
 }
 
@@ -94,6 +70,25 @@ void	death_check(t_data *data, t_philo *ph)
 			pthread_mutex_unlock(&(data->meal_check));
 		}
 	}
+}
+
+void	join_n_destroy(t_data *data, t_philo *ph)
+{
+	int			i;
+
+	i = 0;
+	while (i < data->nb_ph)
+	{
+		pthread_join(ph[i].philo_th, NULL);
+		i++;
+	}
+	i = 0;
+	while (i < data->nb_ph)
+	{
+		pthread_mutex_destroy(&(data->forks[i]));
+		i++;
+	}
+	pthread_mutex_destroy(&(data->message));
 }
 
 void	message(int ph_id, t_data *data, char *s)
