@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 15:15:17 by masamoil          #+#    #+#             */
-/*   Updated: 2022/06/03 16:22:54 by gmorange         ###   ########.fr       */
+/*   Updated: 2022/06/09 14:42:17 by masamoil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,12 @@ void	check_death_time(t_data *data, t_philo *ph)
 		pthread_mutex_lock(&(data->meal_check));
 		if (ft_timediff(get_time_ms(), ph[i].t_last_meal) > data->t_death)
 		{
-			message(i, data, "\033[91mdied\033[0m\n");
+			pthread_mutex_lock(&(data->death_check));
+			printf("%li ", get_time_ms() - data->first_time);
+			printf("%i ", (i + 1));
+			printf("\033[91mdied\033[0m\n");
 			data->dead = 1;
+			pthread_mutex_unlock(&(data->death_check));
 		}
 		pthread_mutex_unlock(&(data->meal_check));
 		i++;
@@ -54,10 +58,10 @@ void	death_check(t_data *data, t_philo *ph)
 {
 	int	i;
 
-	while (data->if_all_ate == 0)
+	while (check_ate(data) == 0)
 	{
 		check_death_time(data, ph);
-		if (data->dead == 1)
+		if (check_data_death(data) == 1)
 			break ;
 		i = 0;
 		while (data->meals != -1 && i < data->nb_ph
@@ -82,19 +86,23 @@ void	join_n_destroy(t_data *data, t_philo *ph)
 		pthread_join(ph[i].philo_th, NULL);
 		i++;
 	}
+	free(data->philo);
 	i = 0;
 	while (i < data->nb_ph)
 	{
 		pthread_mutex_destroy(&(data->forks[i]));
 		i++;
 	}
+	free(data->forks);
 	pthread_mutex_destroy(&(data->message));
+	pthread_mutex_destroy(&(data->meal_check));
+	pthread_mutex_destroy(&(data->death_check));
 }
 
 void	message(int ph_id, t_data *data, char *s)
 {
 	pthread_mutex_lock(&(data->message));
-	if (data->dead == 0)
+	if (check_data_death(data) == 0)
 	{
 		printf("%li ", get_time_ms() - data->first_time);
 		printf("%i ", (ph_id + 1));

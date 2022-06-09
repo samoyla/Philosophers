@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:11:52 by masamoil          #+#    #+#             */
-/*   Updated: 2022/05/30 21:49:43 by marvin           ###   ########.fr       */
+/*   Updated: 2022/06/09 15:06:17 by masamoil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@ void	init_philo(t_data *data)
 	int	i;
 
 	i = -1;
+	data->philo = malloc(sizeof(t_philo) * data->nb_ph);
+	if (!data->philo)
+		return ;
+	data->forks = malloc(sizeof(pthread_mutex_t) * data->nb_ph);
+	if (!data->forks)
+		return ;
 	while (++i < data->nb_ph)
 	{
 		data->philo[i].id = i;
@@ -44,6 +50,8 @@ int	init_mutex(t_data *data)
 	if (pthread_mutex_init(&(data->message), NULL) != 0)
 		return (1);
 	if (pthread_mutex_init(&(data->meal_check), NULL) != 0)
+		return (1);
+	if (pthread_mutex_init(&(data->death_check), NULL) != 0)
 		return (1);
 	while (--i >= 0)
 	{

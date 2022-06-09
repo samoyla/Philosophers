@@ -6,7 +6,7 @@
 /*   By: masamoil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 18:07:59 by masamoil          #+#    #+#             */
-/*   Updated: 2022/06/02 17:46:31 by masamoil         ###   ########.fr       */
+/*   Updated: 2022/06/08 14:50:14 by masamoil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,11 @@ typedef struct s_data
 	int				if_all_ate;
 	int				dead;
 	long int		first_time;
-	t_philo			philo[250];
-	pthread_mutex_t	forks[250];
+	t_philo			*philo;
+	pthread_mutex_t	*forks;
 	pthread_mutex_t	message;
 	pthread_mutex_t	meal_check;
+	pthread_mutex_t	death_check;
 }t_data;
 
 //check-args
