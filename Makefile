@@ -6,7 +6,7 @@
 #    By: masamoil <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/31 17:06:21 by masamoil          #+#    #+#              #
-#    Updated: 2022/06/09 15:14:08 by masamoil         ###   ########.fr        #
+#    Updated: 2022/06/21 14:23:13 by masamoil         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRC = philosophers.c data_init.c utils.c mutex.c\
 
 OBJ = ${SRC:.c=.o}
 
-FLAGS = -Wall -Wextra -Werror -pthread  
+FLAGS = -Wall -Wextra -Werror -pthread #-fsanitize=thread 
 
 all: $(NAME)
 

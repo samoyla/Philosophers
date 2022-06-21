@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:17:49 by masamoil          #+#    #+#             */
-/*   Updated: 2022/06/09 15:04:14 by masamoil         ###   ########.fr       */
+/*   Updated: 2022/06/21 14:11:05 by masamoil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,17 @@
 
 void	pickup_forks(t_data *data, t_philo *philo)
 {	
-	pthread_mutex_lock(&data->forks[philo->l_fork]);
+	if (data->nb_ph - 1 == philo->id)
+		pthread_mutex_lock(&data->forks[philo->r_fork]);
+	else		
+		pthread_mutex_lock(&data->forks[philo->l_fork]);
 	message(philo->id, data, "\033[92mhas taken a fork\033[0m\n");
 	if (data->nb_ph > 1)
 	{
-		pthread_mutex_lock(&data->forks[philo->r_fork]);
+		if (data->nb_ph - 1 == philo->id)
+			pthread_mutex_lock(&data->forks[philo->l_fork]);
+		else		
+			pthread_mutex_lock(&data->forks[philo->r_fork]);
 		message(philo->id, data, "\033[92mhas taken a fork\033[0m\n");
 	}
 	else
@@ -27,10 +33,16 @@ void	pickup_forks(t_data *data, t_philo *philo)
 
 void	unleash_forks(t_data *data, t_philo *philo)
 {	
-	pthread_mutex_unlock(&(data->forks[philo->l_fork]));
+	if (data->nb_ph - 1 == philo->id)
+		pthread_mutex_unlock(&data->forks[philo->r_fork]);
+	else		
+		pthread_mutex_unlock(&data->forks[philo->l_fork]);
 	if (data->nb_ph > 1)
 	{
-		pthread_mutex_unlock(&(data->forks[philo->r_fork]));
+		if (data->nb_ph - 1 == philo->id)
+			pthread_mutex_unlock(&data->forks[philo->l_fork]);
+		else		
+			pthread_mutex_unlock(&data->forks[philo->r_fork]);
 	}
 }
 

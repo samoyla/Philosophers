@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 15:15:17 by masamoil          #+#    #+#             */
-/*   Updated: 2022/06/09 14:42:17 by masamoil         ###   ########.fr       */
+/*   Updated: 2022/06/21 14:14:35 by masamoil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	check_death_time(t_data *data, t_philo *ph)
 			printf("\033[91mdied\033[0m\n");
 			data->dead = 1;
 			pthread_mutex_unlock(&(data->death_check));
+	//		message(i, data, "\033[91mdied\033[0m\n");
 		}
 		pthread_mutex_unlock(&(data->meal_check));
 		i++;
