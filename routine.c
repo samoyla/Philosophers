@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:17:49 by masamoil          #+#    #+#             */
-/*   Updated: 2022/06/21 14:11:05 by masamoil         ###   ########.fr       */
+/*   Updated: 2022/06/22 11:36:18 by masamoil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ void	pickup_forks(t_data *data, t_philo *philo)
 {	
 	if (data->nb_ph - 1 == philo->id)
 		pthread_mutex_lock(&data->forks[philo->r_fork]);
-	else		
+	else
 		pthread_mutex_lock(&data->forks[philo->l_fork]);
 	message(philo->id, data, "\033[92mhas taken a fork\033[0m\n");
 	if (data->nb_ph > 1)
 	{
 		if (data->nb_ph - 1 == philo->id)
 			pthread_mutex_lock(&data->forks[philo->l_fork]);
-		else		
+		else
 			pthread_mutex_lock(&data->forks[philo->r_fork]);
 		message(philo->id, data, "\033[92mhas taken a fork\033[0m\n");
 	}
@@ -35,13 +35,13 @@ void	unleash_forks(t_data *data, t_philo *philo)
 {	
 	if (data->nb_ph - 1 == philo->id)
 		pthread_mutex_unlock(&data->forks[philo->r_fork]);
-	else		
+	else
 		pthread_mutex_unlock(&data->forks[philo->l_fork]);
 	if (data->nb_ph > 1)
 	{
 		if (data->nb_ph - 1 == philo->id)
 			pthread_mutex_unlock(&data->forks[philo->l_fork]);
-		else		
+		else
 			pthread_mutex_unlock(&data->forks[philo->r_fork]);
 	}
 }
@@ -52,9 +52,9 @@ void	eat(t_data *data, t_philo *philo)
 	{
 		pthread_mutex_lock(&(data->meal_check));
 		philo->ate++;
-		message(philo->id, data, "\033[33mis eating\033[0m\n");
 		philo->t_last_meal = get_time_ms();
 		pthread_mutex_unlock(&(data->meal_check));
+		message(philo->id, data, "\033[33mis eating\033[0m\n");
 	}
 	wait(data->t_eat, data);
 }
