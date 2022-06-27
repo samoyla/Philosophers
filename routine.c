@@ -6,7 +6,11 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:17:49 by masamoil          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/06/24 13:46:41 by masamoil         ###   ########.fr       */
+=======
+/*   Updated: 2022/06/23 17:05:25 by masamoil         ###   ########.fr       */
+>>>>>>> refs/remotes/origin/main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +20,11 @@ void	pickup_forks(t_data *data, t_philo *philo)
 {	
 	if (philo->id % 2 == 0)
 		pthread_mutex_lock(&data->forks[philo->r_fork]);
+<<<<<<< HEAD
 	else
+=======
+	else 
+>>>>>>> refs/remotes/origin/main
 		pthread_mutex_lock(&data->forks[philo->l_fork]);
 	message(philo->id, data, "\033[92mhas taken a fork\033[0m\n");
 	if (data->nb_ph > 1)
