@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 15:15:17 by masamoil          #+#    #+#             */
-/*   Updated: 2022/06/22 16:54:39 by masamoil         ###   ########.fr       */
+/*   Updated: 2022/06/23 16:42:36 by masamoil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	check_death_time(t_data *data, t_philo *ph)
 	while (i < data->nb_ph && !(data->dead))
 	{
 		pthread_mutex_lock(&(data->meal_check));
-		if (ft_timediff(get_time_ms(), ph[i].t_last_meal) > data->t_death)
+		if (ft_timediff(get_time_ms(), ph[i].t_last_meal) >= data->t_death)
 		{
 			pthread_mutex_lock(&(data->death_check));
 			data->dead = 1;

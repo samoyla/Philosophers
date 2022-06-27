@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:17:49 by masamoil          #+#    #+#             */
-/*   Updated: 2022/06/22 11:36:18 by masamoil         ###   ########.fr       */
+/*   Updated: 2022/06/24 13:46:41 by masamoil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 void	pickup_forks(t_data *data, t_philo *philo)
 {	
-	if (data->nb_ph - 1 == philo->id)
+	if (philo->id % 2 == 0)
 		pthread_mutex_lock(&data->forks[philo->r_fork]);
 	else
 		pthread_mutex_lock(&data->forks[philo->l_fork]);
 	message(philo->id, data, "\033[92mhas taken a fork\033[0m\n");
 	if (data->nb_ph > 1)
 	{
-		if (data->nb_ph - 1 == philo->id)
+		if (philo->id % 2 == 0)
 			pthread_mutex_lock(&data->forks[philo->l_fork]);
 		else
 			pthread_mutex_lock(&data->forks[philo->r_fork]);
@@ -33,16 +33,16 @@ void	pickup_forks(t_data *data, t_philo *philo)
 
 void	unleash_forks(t_data *data, t_philo *philo)
 {	
-	if (data->nb_ph - 1 == philo->id)
-		pthread_mutex_unlock(&data->forks[philo->r_fork]);
-	else
+	if (philo->id % 2 == 0)
 		pthread_mutex_unlock(&data->forks[philo->l_fork]);
+	else
+		pthread_mutex_unlock(&data->forks[philo->r_fork]);
 	if (data->nb_ph > 1)
 	{
-		if (data->nb_ph - 1 == philo->id)
-			pthread_mutex_unlock(&data->forks[philo->l_fork]);
-		else
+		if (philo->id % 2 == 0)
 			pthread_mutex_unlock(&data->forks[philo->r_fork]);
+		else
+			pthread_mutex_unlock(&data->forks[philo->l_fork]);
 	}
 }
 
@@ -64,6 +64,8 @@ void	sleep_and_think(t_data *data, t_philo *ph)
 	message(ph->id, data, "\033[96mis sleeping\033[0m\n");
 	wait(data->t_sleep, data);
 	message(ph->id, data, "\033[37mis thinking\033[0m\n");
+	if (data->nb_ph % 2 == 1)
+		wait(data->t_eat / 2, data);
 }
 
 void	*routine(void *args)
@@ -73,8 +75,6 @@ void	*routine(void *args)
 
 	philo = (t_philo *)args;
 	data = philo->data;
-	if (philo->id % 2 == 0)
-		usleep(1500);
 	while (!check_data_death(data))
 	{
 		if (check_ate(data) == 1)
