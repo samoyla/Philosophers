@@ -1,4 +1,4 @@
-Philosophers![philos](https://user-images.githubusercontent.com/73430903/175942780-45cb88c3-840a-42dd-95b0-a54515ffc317.png)
+![philos](https://user-images.githubusercontent.com/73430903/175942780-45cb88c3-840a-42dd-95b0-a54515ffc317.png)
 :
 I never thought philosophy would be so deadly (the basics of threading a process.
 How to create threads and use mutexes.)
