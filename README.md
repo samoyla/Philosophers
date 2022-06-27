@@ -30,3 +30,5 @@ a philosopher dies of starvation.
 • Philosophers don’t know if another philosopher is about to die.
 
 • No need to say that philosophers should avoid dying!
+
+validated on 100% without bonuses
