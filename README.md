@@ -43,4 +43,4 @@ Correctness properties it needs to satisfy are :
     No strict Alternation.
     Proper utilization of time.
 
-validated on 100% without bonuses
+validated with 100 points without bonuses
