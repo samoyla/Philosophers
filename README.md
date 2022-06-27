@@ -1,4 +1,5 @@
-Philosophers:
+Philosophers![philos](https://user-images.githubusercontent.com/73430903/175942780-45cb88c3-840a-42dd-95b0-a54515ffc317.png)
+:
 I never thought philosophy would be so deadly (the basics of threading a process.
 How to create threads and use mutexes.)
 
@@ -30,5 +31,15 @@ a philosopher dies of starvation.
 • Philosophers don’t know if another philosopher is about to die.
 
 • No need to say that philosophers should avoid dying!
+
+Correctness properties it needs to satisfy are :
+
+    Mutual Exclusion Principle –
+    No two Philosophers can have the two forks simultaneously.
+    Free from Deadlock –
+    Each philosopher can get the chance to eat in a certain finite time.
+    Free from Starvation –When few Philosophers are waiting then one gets a chance to eat in a while.
+    No strict Alternation.
+    Proper utilization of time.
 
 validated on 100% without bonuses
