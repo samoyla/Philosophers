@@ -1,5 +1,6 @@
 Philosophers:
-I never thought philosophy would be so deadly
+I never thought philosophy would be so deadly (the basics of threading a process.
+How to create threads and use mutexes.)
 
 Overview
 
